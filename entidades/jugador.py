@@ -8,6 +8,8 @@ class jugador(entidad):
         self.mover_abajo = False
         self.mover_derecha = False
         self.mover_izquierda = False
+        self.lista_sprites = []
+        self.cargar_sprites(self.lista_sprites,"assets/player")
 
     def mover(self):
         delta_x = 0
