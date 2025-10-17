@@ -1,6 +1,7 @@
 import pygame
 from entidades.enemigo import enemigo
 from entidades.jugador import jugador
+from  mapa import Map
 
 pygame.init()
 
@@ -20,10 +21,15 @@ slime = enemigo(100, 100, enemy_image)
 
 reloj = pygame.time.Clock()
 run = True
+
+mapa_juego = Map("assets/mapa/mi_mapa.tmx")
+fondo_mapa = mapa_juego.crear_mapa()
 while run:
     reloj.tick(60)
 
     ventana.fill((0,0,0))
+
+    ventana.blit(fondo_mapa, (0, 0))
 
     jugador.update()
 
