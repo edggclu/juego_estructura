@@ -1,6 +1,6 @@
 import os
-
 import pygame
+
 class entidad():
     def __init__(self, x, y, interfaz, image_path):
         self.image = pygame.image.load(image_path)

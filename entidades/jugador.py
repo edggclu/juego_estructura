@@ -8,20 +8,22 @@ class jugador(entidad):
         self.mover_abajo = False
         self.mover_derecha = False
         self.mover_izquierda = False
+        self.idle = True
         self.lista_sprites = []
-        self.cargar_sprites(self.lista_sprites,"assets/player")
+        self.velocidad = 3
+        self.cargar_sprites(self.lista_sprites,"assets/skeleton/walking")
 
     def mover(self):
         delta_x = 0
         delta_y = 0
         if self.mover_derecha:
-            delta_x = 5
+            delta_x = self.velocidad
         if self.mover_izquierda:
-            delta_x = -5
+            delta_x = -self.velocidad
         if self.mover_arriba:
-            delta_y = -5
+            delta_y = -self.velocidad
         if self.mover_abajo:
-            delta_y = 5
+            delta_y = self.velocidad
 
         self.forma.x += delta_x
         self.forma.y += delta_y

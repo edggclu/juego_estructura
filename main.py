@@ -11,7 +11,7 @@ ventana = pygame.display.set_mode((ancho, alto))
 pygame.display.set_caption("Game")
 
 #Imagen de el jugador
-jugador = jugador(50,50, ventana, "assets/player/idle_00.png")
+jugador = jugador(50, 50, ventana, "assets/skeleton/idle/idle_00.png")
 
 #Imagen del enemigo
 enemy_image = pygame.image.load("assets/enemy/Gemini_Generated_Image_5t0q7a5t0q7a5t0q (1).png")
