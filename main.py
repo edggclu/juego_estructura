@@ -1,4 +1,6 @@
 import pygame
+
+from entidades.enemigo import enemigo
 from entidades.jugador import jugador
 
 
@@ -15,9 +17,15 @@ mover_izquierda = False
 ventana = pygame.display.set_mode((ancho, alto))
 pygame.display.set_caption("Game")
 
+#Imagen de el jugador
 player_image = pygame.image.load("assets/player/idle_00.png")
 player_image = pygame.transform.scale(player_image, (100, 100))
 jugador = jugador(50,50, player_image)
+
+#Imagen del enemigo
+enemy_image = pygame.image.load("assets/enemy/Gemini_Generated_Image_5t0q7a5t0q7a5t0q (1).png")
+enemy_image = pygame.transform.scale(enemy_image, (50, 50))
+slime = enemigo(100, 100, enemy_image)
 
 reloj = pygame.time.Clock()
 run = True
@@ -41,6 +49,9 @@ while run:
 
     jugador.mover(delta_x,delta_y)
     jugador.dibujar(ventana)
+
+    slime.seguir_jugador(jugador)
+    slime.dibujar(ventana)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
