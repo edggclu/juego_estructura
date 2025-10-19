@@ -9,9 +9,13 @@ class jugador(entidad):
         self.mover_derecha = False
         self.mover_izquierda = False
         self.idle = True
-        self.lista_sprites = []
         self.velocidad = 3
-        self.cargar_sprites(self.lista_sprites,"assets/skeleton/walking")
+
+        #listas de sprites
+        self.walking = self.cargar_sprites('assets/skeleton/walking')
+        self.idle = self.cargar_sprites("assets/skeleton/idle")
+
+        self.lista_actual_de_sprites = self.idle
 
     def mover(self):
         delta_x = 0
