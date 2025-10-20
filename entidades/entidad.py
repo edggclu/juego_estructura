@@ -42,7 +42,7 @@ class entidad():
         scaleSize = 100
         if path.split('/')[1] == 'Idle': scaleSize = 100
         for i in range(len(list)):
-            im = (pygame.image.load(dir + "/" +list[i]))
+            im = (pygame.image.load(dir + "/" +list[i]).convert_alpha())
             list[i] =(pygame.transform.scale(im, (scaleSize, scaleSize)))
         return list
 

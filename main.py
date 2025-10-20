@@ -1,7 +1,10 @@
 import pygame
+from pygame import Surface
+
 from entidades.enemigo import enemigo
 from entidades.jugador import jugador
 from  mapa import Map
+from ventanas.menu.Menu import Menu
 
 pygame.init()
 
@@ -24,8 +27,7 @@ reloj = pygame.time.Clock()
 mapa_juego = Map("assets/mapa/mi_mapa.tmx")
 fondo_mapa = mapa_juego.crear_mapa()
 
-run = True
-estado = 'menu'
+
 
 def jugando():
     ventana.fill((0, 0, 0))
@@ -36,10 +38,16 @@ def jugando():
     # slime.seguir_jugador(jugador)
     slime.dibujar(ventana)
 
+estado = 'menu'
+menu = Menu(ventana)
+run = True
 while run:
     reloj.tick(60)
     if estado == 'jugando':
         jugando()
+    if estado == 'menu':
+        menu.update()
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
