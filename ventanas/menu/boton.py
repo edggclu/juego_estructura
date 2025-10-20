@@ -12,6 +12,7 @@ class boton:
         self.texto_rect = None
         self.setup()
         self.fuente = None
+        self.clicked = False
 
 
     def setup(self):
@@ -34,7 +35,9 @@ class boton:
         click = pygame.mouse.get_pressed()[0]
         if self.boton_rect.collidepoint(mouse):
             if click:
-                print("boton")
+                self.clicked = True
+            else:
+                self.clicked = False
             self.animar(True)
         else:
             self.animar(False)

@@ -52,8 +52,8 @@ class jugador(entidad):
         if event.key == pygame.K_a: self.mover_izquierda = True
         if event.key == pygame.K_d: self.mover_derecha = True
         if event.key == pygame.K_s: self.mover_abajo = True
-        if self.attack == False:
-            if event.key == pygame.K_e: self.attack = True;  self.steps = 0; self.offset = 5; self.contador_sprite = 0
+        if not self.attack:
+            if event.key == pygame.K_j: self.attack = True;  self.steps = 0; self.offset = 5; self.contador_sprite = 0
 
 
     def key_up(self, event):

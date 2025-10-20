@@ -46,6 +46,8 @@ while run:
     if estado == 'jugando':
         jugando()
     if estado == 'menu':
+        if menu.nueva_partida.clicked:
+            estado = 'jugando'
         menu.update()
 
 
