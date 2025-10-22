@@ -48,7 +48,10 @@ while run:
     if estado == 'menu':
         if menu.nueva_partida.clicked:
             estado = 'jugando'
+        if menu.salir.clicked:
+            run = False
         menu.update()
+
 
 
     for event in pygame.event.get():
