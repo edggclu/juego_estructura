@@ -18,9 +18,7 @@ pygame.display.set_caption("Game")
 jugador = jugador(50, 50, ventana, "Skeleton1")
 
 #Imagen del enemigo
-enemy_image = pygame.image.load("assets/enemy/Gemini_Generated_Image_5t0q7a5t0q7a5t0q (1).png")
-enemy_image = pygame.transform.scale(enemy_image, (50, 50))
-slime = enemigo(100, 100, enemy_image)
+enemigo = enemigo(200, 100, ventana, 'Vampire_Brown', jugador)
 
 reloj = pygame.time.Clock()
 
@@ -34,9 +32,8 @@ def jugando():
 
     ventana.blit(fondo_mapa, (0, 0))
 
+    enemigo.update()
     jugador.update()
-    # slime.seguir_jugador(jugador)
-    slime.dibujar(ventana)
 
 estado = 'menu'
 menu = Menu(ventana)

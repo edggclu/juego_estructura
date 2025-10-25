@@ -23,7 +23,7 @@ class boton:
         self.boton_rect.x = self.ventana.get_width() / 2 - boton.get_width() / 2
         self.boton_rect.y = 120 + ((self.boton_rect.height + 20)*self.orden)
 
-        self.fuente = pygame.font.SysFont("comicsans", 30)
+        self.fuente = pygame.font.SysFont("minecraft", 30)
         self.texto_surface = self.fuente.render(self.texto, True, (255, 255, 255))
         self.texto_rect = self.texto_surface.get_rect()
         self.texto_rect.x = (self.boton_rect.x + self.boton_rect.width / 2) - self.texto_surface.get_width() / 2
@@ -52,7 +52,7 @@ class boton:
             self.boton_rect.x = self.ventana.get_width() / 2 - self.boton_rect.width / 2
             self.boton_rect.y = 120 + ((boton.get_height()) * self.orden) - 7
 
-            self.fuente = pygame.font.SysFont("comicsans", 30)
+            self.fuente = pygame.font.SysFont("minecraft", 30)
             self.texto_surface = self.fuente.render(self.texto, True, (255, 255, 255))
             self.texto_rect = self.texto_surface.get_rect()
             self.texto_rect.x = (self.boton_rect.x + self.boton_rect.width / 2) - self.texto_surface.get_width() / 2
@@ -66,7 +66,7 @@ class boton:
             self.boton_rect.x = self.ventana.get_width() / 2 - boton.get_width() / 2
             self.boton_rect.y = 120 + ((self.boton_rect.height + 20) * self.orden)
 
-            self.fuente = pygame.font.SysFont("comicsans", 30)
+            self.fuente = pygame.font.SysFont("minecraft", 30)
             self.texto_surface = self.fuente.render(self.texto, True, (255, 255, 255))
             self.texto_rect = self.texto_surface.get_rect()
             self.texto_rect.x = (self.boton_rect.x + self.boton_rect.width / 2) - self.texto_surface.get_width() / 2
