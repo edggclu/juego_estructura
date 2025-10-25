@@ -4,6 +4,7 @@ from pygame import Surface
 from entidades.enemigo import enemigo
 from entidades.jugador import jugador
 from  mapa import Map
+from ventanas.cargar_partida.ventana_cargar_partida import ventana_cargar_partida
 from ventanas.menu.Menu import Menu
 
 pygame.init()
@@ -24,6 +25,7 @@ reloj = pygame.time.Clock()
 
 mapa_juego = Map("assets/mapa/mi_mapa.tmx")
 fondo_mapa = mapa_juego.crear_mapa()
+cargar_menu = ventana_cargar_partida(ventana)
 
 
 
@@ -47,7 +49,11 @@ while run:
             estado = 'jugando'
         if menu.salir.clicked:
             run = False
+        if menu.cargar_partida.clicked:
+            estado = 'cargar'
         menu.update()
+    if estado == 'cargar':
+        cargar_menu.update()
 
 
 
