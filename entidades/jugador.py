@@ -11,15 +11,17 @@ class jugador(entidad):
         self.mover_derecha = False
         self.mover_izquierda = False
         self.attack_action = False
+
         self.idle = True
         self.flip = False
 
-        self.vida = 6
-        self.vida_list = self.cargar_sprites('HealthBar')
-        self.vida_rect = pygame.rect.Rect(self.forma.x, self.forma.y + 100, 50,10)
+        self.vida = 25
+        self.vof = self.hitbox.width / self.vida
+        #self.vida_rect = pygame.rect.Rect(self.forma.x, self.forma.y + 100, 50,10)
 
-        self.hitbox_attack = pygame.rect.Rect((self.hitbox.centerx + (self.hitbox.width/2 * 1.6)),self.hitbox.y +40,40,self.hitbox.height + 10)
+        #self.hitbox_attack = pygame.rect.Rect((self.hitbox.centerx + (self.hitbox.width/2 * 1.6)),self.hitbox.y +40,40,self.hitbox.height + 10)
         self.attack = False
+        self.color_vida = (0,255,0)
 
 
     def mover(self):
@@ -46,31 +48,27 @@ class jugador(entidad):
             self.lista_actual_de_sprites = self.attack_list
             #if 1 < self.steps < len(self.lista_actual_de_sprites) - 1:
             #    self.attack = True
-            if self.steps == 2 and self.contador_sprite == 1:
-                self.attack = True
-            else:
-                self.attack = False
+
 
 
 
         self.forma.x += delta_x
         self.forma.y += delta_y
 
-        self.dibujar_vida()
+        #self.dibujar_vida()
 
         #print(delta_x, delta_y)
 
     def dibujar_vida(self):
-        flip_image = pygame.transform.flip(self.vida_list[self.vida], False, False)
-        flip_image.set_alpha(100)
-        x =  1 if self.flip else -0.1
-        self.interfaz.blit(flip_image, ((self.hitbox.left + (self.hitbox.width/2 * x)) - 10, self.hitbox.y + self.hitbox.height))
+        super().dibujar_vida()
+        #pygame.draw.rect(self.interfaz,(255,0,0),(self.hitbox.left,self.hitbox.bottom,self.hitbox.width,15),1)
+        #pygame.draw.rect(self.interfaz,(255,0,0),(self.hitbox.left,self.hitbox.bottom,self.vof * self.vida,15))
 
-        a = -2.5 if self.flip else 1
-        self.hitbox_attack.x = self.hitbox.centerx + (self.hitbox.width/2 * a)
-        self.hitbox_attack.y = self.hitbox.y
+        #a = -2.5 if self.flip else 1
+        #self.hitbox_attack.x = self.hitbox.centerx + (self.hitbox.width/2 * a)
+        #self.hitbox_attack.y = self.hitbox.y
 
-        pygame.draw.rect(self.interfaz, (255,0,0),self.hitbox_attack)
+        #pygame.draw.rect(self.interfaz, (255,0,0),self.hitbox_attack)
 
     def key_down(self, event):
         if event.key == pygame.K_w: self.mover_arriba = True
