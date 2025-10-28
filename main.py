@@ -9,8 +9,8 @@ from ventanas.menu.Menu import Menu
 
 pygame.init()
 
-ancho = 800
-alto = 600
+ancho = 900
+alto = 700
 
 ventana = pygame.display.set_mode((ancho, alto))
 pygame.display.set_caption("Game")
