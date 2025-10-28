@@ -23,7 +23,7 @@ enemigo = enemigo(200, 100, ventana, 'Vampire_Brown', jugador)
 
 reloj = pygame.time.Clock()
 
-mapa_juego = Map("assets/mapa/mi_mapa.tmx")
+mapa_juego = Map("assets/mapa/mapa2.tmx")
 fondo_mapa = mapa_juego.crear_mapa()
 cargar_menu = ventana_cargar_partida(ventana)
 
