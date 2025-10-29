@@ -1,49 +1,29 @@
 import pygame
-from pygame import Surface
-
-from entidades.enemigo import enemigo
-from entidades.jugador import jugador
-from  mapa import Map
 from ventanas.cargar_partida.ventana_cargar_partida import ventana_cargar_partida
 from ventanas.menu.Menu import Menu
+from ventanas.juego.ventana_juego import ventana_juego
 
 pygame.init()
 
-ancho = 800
-alto = 600
+ancho = 1080
+alto = 720
 
-ventana = pygame.display.set_mode((ancho, alto))
+estado = 'menu'
+ventana = pygame.display.set_mode((ancho, alto), pygame.WINDOWMAXIMIZED)
 pygame.display.set_caption("Game")
-
-#Imagen de el jugador
-jugador = jugador(50, 50, ventana, "Skeleton1")
-
-#Imagen del enemigo
-enemigo = enemigo(200, 100, ventana, 'Vampire_Brown', jugador)
 
 reloj = pygame.time.Clock()
 
-mapa_juego = Map("assets/mapa/mapa2.tmx")
-fondo_mapa = mapa_juego.crear_mapa()
+menu = Menu(ventana)
+juego = ventana_juego(ventana)
 cargar_menu = ventana_cargar_partida(ventana)
 
-
-
-def jugando():
-    ventana.fill((0, 0, 0))
-
-    ventana.blit(fondo_mapa, (0, 0))
-
-    enemigo.update()
-    jugador.update()
-
-estado = 'menu'
-menu = Menu(ventana)
 run = True
+
 while run:
     reloj.tick(60)
     if estado == 'jugando':
-        jugando()
+        juego.update()
     if estado == 'menu':
         if menu.nueva_partida.clicked:
             estado = 'jugando'
@@ -55,17 +35,14 @@ while run:
     if estado == 'cargar':
         cargar_menu.update()
 
-
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.KEYDOWN:
-            jugador.key_down(event)
+            juego.jugador.key_down(event)
         if event.type == pygame.KEYUP:
-            jugador.key_up(event)
+            juego.jugador.key_up(event)
 
     pygame.display.update()
 
 pygame.quit()
-

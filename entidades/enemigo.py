@@ -54,7 +54,8 @@ class enemigo(entidad):
         if direccion.length() > 0:
             direccion.normalize_ip()
         if not self.attack_action:
-            self.forma.move_ip(direccion * self.velocidad)
+            self.forma.move_ip(direccion * self.velocidad - (self.jugador.delta_x, self.jugador.delta_y))
+            pass
 
         #pygame.draw.rect(self.interfaz, (255,0,0),self.hitbox)
 

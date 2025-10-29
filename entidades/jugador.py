@@ -12,37 +12,51 @@ class jugador(entidad):
         self.mover_izquierda = False
         self.attack_action = False
 
+        self.piso = 0
+
         self.idle = True
         self.flip = False
 
         self.vida = 25
         self.vof = self.hitbox.width / self.vida
+        self.gid_lados = (0,0,0,0)
         #self.vida_rect = pygame.rect.Rect(self.forma.x, self.forma.y + 100, 50,10)
 
         #self.hitbox_attack = pygame.rect.Rect((self.hitbox.centerx + (self.hitbox.width/2 * 1.6)),self.hitbox.y +40,40,self.hitbox.height + 10)
         self.attack = False
         self.color_vida = (0,255,0)
 
+        self.delta_y = self.delta_x = 0
+        self.camara = [0,0,0,0]
+        self.camara_max_bottom = self.interfaz.get_height() - self.hitbox.bottom - self.hitbox.height/2
+        self.camara_max_top = 0 + self.hitbox.top
+        self.camara_max_left = 0 + self.hitbox.left
+        self.camara_max_right = self.interfaz.get_width() - self.hitbox.right - self.hitbox.width/2
+        self.relative_x = self.relative_y = 0
+
+
 
     def mover(self):
-        delta_x = 0
-        delta_y = 0
+        self.delta_x = 0
+        self.delta_y = 0
+
+
 
         if self.mover_derecha:
-            delta_x = self.velocidad
+            self.delta_x = self.velocidad
         if self.mover_izquierda:
-            delta_x = -self.velocidad
+            self.delta_x = -self.velocidad
         if self.mover_arriba:
-            delta_y = -self.velocidad
+            self.delta_y = -self.velocidad
         if self.mover_abajo:
-            delta_y = self.velocidad
+            self.delta_y = self.velocidad
 
 
         if not self.attack_action:
-            if delta_x > 0: self.lista_actual_de_sprites = self.run_list; self.flip = False
-            if delta_x < 0: self.lista_actual_de_sprites = self.run_list; self.flip = True
-            if delta_y != 0: self.lista_actual_de_sprites = self.run_list;
-            if delta_x == 0 == delta_y: self.lista_actual_de_sprites = self.idle_list
+            if self.delta_x > 0: self.lista_actual_de_sprites = self.run_list; self.flip = False
+            if self.delta_x < 0: self.lista_actual_de_sprites = self.run_list; self.flip = True
+            if self.delta_y != 0: self.lista_actual_de_sprites = self.run_list;
+            if self.delta_x == 0 == self.delta_y: self.lista_actual_de_sprites = self.idle_list
             self.attack = False
         else:
             self.lista_actual_de_sprites = self.attack_list
@@ -51,13 +65,35 @@ class jugador(entidad):
 
 
 
+        if self.gid_lados[0]!= 0 and self.delta_y == -self.velocidad:
+            self.delta_y = 0
+        if self.gid_lados[1]!= 0 and self.delta_x == self.velocidad:
+            self.delta_x = 0
+        if self.gid_lados[2] != 0 and self.delta_y == self.velocidad:
+            self.delta_y = 0
+        if self.gid_lados[3]!= 0 and self.delta_x == -self.velocidad:
+            self.delta_x = 0
 
-        self.forma.x += delta_x
-        self.forma.y += delta_y
+        if abs(self.camara_max_bottom) > self.camara[2]:
+            self.forma.y += self.delta_y
+            self.delta_y = 0
+        elif abs(self.camara_max_top) > self.camara[0]:
+            self.forma.y += self.delta_y
+            self.delta_y = 0
+        if abs(self.camara_max_right) > self.camara[1]:
+            self.forma.x += self.delta_x
+            self.delta_x = 0
+        elif abs(self.camara_max_left) > self.camara[3] or self.hitbox.left <= self.relative_y + 20:
+            self.forma.x += self.delta_x
+            self.delta_x = 0
+
+        self.relative_x += - self.delta_x
+        self.relative_y += - self.delta_y
+
 
         #self.dibujar_vida()
 
-        #print(delta_x, delta_y)
+        #print(self.delta_x, self.delta_y)
 
     def dibujar_vida(self):
         super().dibujar_vida()
