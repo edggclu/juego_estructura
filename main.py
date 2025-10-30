@@ -15,7 +15,7 @@ pygame.display.set_caption("Game")
 reloj = pygame.time.Clock()
 
 menu = Menu(ventana)
-juego = ventana_juego(ventana)
+#juego = ventana_juego(ventana)
 cargar_menu = ventana_cargar_partida(ventana)
 
 run = True

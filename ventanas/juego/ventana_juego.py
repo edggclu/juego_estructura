@@ -6,14 +6,18 @@ from mapa import Map
 
 
 class ventana_juego:
-    def __init__(self, ventana):
+    def __init__(self, ventana, partida):
         self.ventana = ventana
+        self.partida = partida
 
-        # Imagen de el jugador
+
+        # Instancia del jugador
         self.jugador = jugador(ventana.get_width() / 2, ventana.get_height() / 2, ventana, "Skeleton1")
 
-        # Imagen del enemigo
+        # Instancia del enemigo
         self.enemigo = enemigo(200, 100, ventana, 'Vampire_Brown', self.jugador)
+
+
         self.mapa_juego = Map("assets/mapa/mapa2.tmx")
 
         self.fondo_mapa = self.mapa_juego.crear_mapa()
@@ -31,3 +35,4 @@ class ventana_juego:
         self.jugador.camara[3] = (-x + self.jugador.hitbox.left)
         self.enemigo.update()
         self.jugador.update()
+
