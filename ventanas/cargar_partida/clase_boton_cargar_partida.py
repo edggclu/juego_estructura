@@ -6,8 +6,8 @@ class boton_cargar_partida:
         self.ventana = ventana
         self.nombre_jugaror = nombre_jugador
         self.daño_espada = 7
-        self.ventana_boton = pygame.image.load("ventanas/menu/Boton.png")
-        self.boton_rect = self.ventana_boton.get_rect()
+        self.imagen = pygame.image.load("ventanas/menu/Boton.png")
+        self.boton_rect = self.imagen.get_rect()
 
         self.espada_default = "assets/espadas/espada_default.png"
         self.imagen_personaje = "assets/Sprites/Ogre/Idle/Idle_Ogre_2.png"
@@ -15,4 +15,5 @@ class boton_cargar_partida:
         #self.imagen_personaje =
 
     def update(self):
-        self.ventana.blit(self.ventana_boton,(0,0))
+        self.imagen = pygame.transform.scale(self.imagen, (360, 125))
+        #self.ventana.blit(self.imagen,(0,0))
