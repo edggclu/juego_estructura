@@ -1,7 +1,7 @@
 import pygame
 from ventanas.cargar_partida.ventana_cargar_partida import ventana_cargar_partida
 from ventanas.menu.Menu import Menu
-from ventanas.juego.ventana_juego import ventana_juego
+from ventanas.nueva_partida.ventana_nueva_partida import ventana_nueva_partida
 
 pygame.init()
 
@@ -14,19 +14,20 @@ pygame.display.set_caption("Game")
 
 reloj = pygame.time.Clock()
 
+# Instanciacion de Ventanas
 menu = Menu(ventana)
-#juego = ventana_juego(ventana)
+menu_nueva_partida = ventana_nueva_partida(ventana)
 cargar_menu = ventana_cargar_partida(ventana)
 
 run = True
 
 while run:
     reloj.tick(60)
-    if estado == 'jugando':
-        juego.update()
+    if estado == 'ventana_nueva_partida':
+        menu_nueva_partida.update()
     if estado == 'menu':
-        if menu.nueva_partida.clicked:
-            estado = 'jugando'
+        if menu.boton_nueva_partida.clicked:
+            estado = 'ventana_nueva_partida'
         if menu.salir.clicked:
             run = False
         if menu.cargar_partida.clicked:
