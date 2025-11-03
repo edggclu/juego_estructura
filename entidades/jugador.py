@@ -2,9 +2,8 @@ import pygame
 from entidades.entidad import entidad
 
 class jugador(entidad):
-    def __init__(self, x, y, interfaz, nombre):
-        super().__init__(x, y, interfaz, nombre)
-        self.velocidad = 3
+    def __init__(self, x, y, interfaz, nombre, arma):
+        super().__init__(x, y, interfaz, nombre, arma)
 
         self.mover_arriba = False
         self.mover_abajo = False
@@ -20,7 +19,6 @@ class jugador(entidad):
         self.vida = 25
         self.vof = self.hitbox.width / self.vida
         self.gid_lados = (0,0,0,0)
-        #self.vida_rect = pygame.rect.Rect(self.forma.x, self.forma.y + 100, 50,10)
 
         #self.hitbox_attack = pygame.rect.Rect((self.hitbox.centerx + (self.hitbox.width/2 * 1.6)),self.hitbox.y +40,40,self.hitbox.height + 10)
         self.attack = False
@@ -97,14 +95,6 @@ class jugador(entidad):
 
     def dibujar_vida(self):
         super().dibujar_vida()
-        #pygame.draw.rect(self.interfaz,(255,0,0),(self.hitbox.left,self.hitbox.bottom,self.hitbox.width,15),1)
-        #pygame.draw.rect(self.interfaz,(255,0,0),(self.hitbox.left,self.hitbox.bottom,self.vof * self.vida,15))
-
-        #a = -2.5 if self.flip else 1
-        #self.hitbox_attack.x = self.hitbox.centerx + (self.hitbox.width/2 * a)
-        #self.hitbox_attack.y = self.hitbox.y
-
-        #pygame.draw.rect(self.interfaz, (255,0,0),self.hitbox_attack)
 
     def key_down(self, event):
         if event.key == pygame.K_w: self.mover_arriba = True
@@ -113,7 +103,7 @@ class jugador(entidad):
         if event.key == pygame.K_s: self.mover_abajo = True
         if event.key == pygame.K_n: self.vida -= 1
         if not self.attack_action:
-            if event.key == pygame.K_j: self.attack_action = True;  self.steps = 0; self.offset = 5; self.contador_sprite = 0
+            if event.key == pygame.K_j: self.attack_action = True;  self.steps = 0; self.offset = 15//self.velocidad; self.contador_sprite = 0
 
 
     def key_up(self, event):

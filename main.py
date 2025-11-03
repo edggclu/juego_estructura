@@ -18,13 +18,12 @@ reloj = pygame.time.Clock()
 menu = Menu(ventana)
 menu_nueva_partida = ventana_nueva_partida(ventana)
 cargar_menu = ventana_cargar_partida(ventana)
+juego = None
 
 run = True
 
 while run:
     reloj.tick(60)
-    if estado == 'ventana_nueva_partida':
-        menu_nueva_partida.update()
     if estado == 'menu':
         if menu.boton_nueva_partida.clicked:
             estado = 'ventana_nueva_partida'
@@ -33,6 +32,13 @@ while run:
         if menu.cargar_partida.clicked:
             estado = 'cargar'
         menu.update()
+    if estado == 'ventana_nueva_partida':
+        menu_nueva_partida.update()
+        if menu_nueva_partida.ventana_del_juego is not None:
+            juego = menu_nueva_partida.ventana_del_juego
+            estado = 'juego'
+    if estado == 'juego':
+        juego.update()
     if estado == 'cargar':
         cargar_menu.update()
 

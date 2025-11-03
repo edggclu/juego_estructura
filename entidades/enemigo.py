@@ -5,13 +5,12 @@ from entidades.jugador import jugador
 
 
 class enemigo(entidad):
-    def __init__(self, x, y, interfaz, nombre, jugador):
-        super().__init__(x, y, interfaz, nombre)
+    def __init__(self, x, y, interfaz, nombre, jugador, arma):
+        super().__init__(x, y, interfaz, nombre, arma)
         self.jugador = jugador
-        self.velocidad = 2
         self.lista_actual_de_sprites = self.run_list
 
-        self.vida = 2
+        self.vida = 10
         self.vof = self.hitbox.width / self.vida
 
 
@@ -32,7 +31,8 @@ class enemigo(entidad):
                 self.steps = 0; self.offset = 5; self.contador_sprite = 0
                 self.lista_actual_de_sprites = self.attack_list
             else:
-                self.lista_actual_de_sprites = self.run_list
+                if self.lista_actual_de_sprites != self.death_list:
+                    self.lista_actual_de_sprites = self.run_list
 
         if direccion.length() > 0:
             direccion.normalize_ip()
@@ -46,7 +46,7 @@ class enemigo(entidad):
 
         # Recibe daño
         if self.hitbox.colliderect(self.jugador.hitbox_attack) and self.jugador.attack:
-            self.vida -= 1
+            self.vida -= self.jugador.fuerza
             self.forma.x += direccion[0]*-50
             self.dano = True
             print('Daño')
@@ -54,8 +54,17 @@ class enemigo(entidad):
         if direccion.length() > 0:
             direccion.normalize_ip()
         if not self.attack_action:
-            self.forma.move_ip(direccion * self.velocidad - (self.jugador.delta_x, self.jugador.delta_y))
-            pass
+            if self.vida > 0:
+                self.forma.move_ip(direccion * self.velocidad - (self.jugador.delta_x, self.jugador.delta_y))
 
+
+        if self.vida <= 0:
+            if self.lista_actual_de_sprites is not self.death_list:
+                self.velocidad = 0
+                self.contador_sprite = 0
+                self.lista_actual_de_sprites = self.death_list
+                self.offset = 4
+
+        #pygame.display.set_caption(f'{self.contador_sprite}')
         #pygame.draw.rect(self.interfaz, (255,0,0),self.hitbox)
 

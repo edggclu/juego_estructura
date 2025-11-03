@@ -1,7 +1,8 @@
+import ast
+
 class partida:
-    def __init__(self, ventana, tipo_personaje, arma):
-        self.ventana = ventana
-        self.arma = arma
+    def __init__(self , tipo_personaje, arma:dict):
+        self.arma = ast.literal_eval(arma)
         self.tipo_personaje = tipo_personaje
 
         self.estadisticas = {

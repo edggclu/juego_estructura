@@ -11,13 +11,19 @@ class ventana_juego:
         self.partida = partida
 
 
+
         # Instancia del jugador
-        self.jugador = jugador(ventana.get_width() / 2, ventana.get_height() / 2, ventana, "Skeleton1")
+        self.jugador = jugador(ventana.get_width() / 2,
+                               ventana.get_height() / 2,
+                               ventana,
+                               f'{self.partida.tipo_personaje}',
+                               self.partida.arma)
 
         # Instancia del enemigo
-        self.enemigo = enemigo(200, 100, ventana, 'Vampire_Brown', self.jugador)
+        self.enemigo = enemigo(200, 100, ventana, f'vampire_{self.jugador.color}', self.jugador, self.partida.arma)
+        self.enemigo.vida = 10
 
-
+        self.entidades = [self.jugador, self.enemigo]
         self.mapa_juego = Map("assets/mapa/mapa2.tmx")
 
         self.fondo_mapa = self.mapa_juego.crear_mapa()
@@ -33,6 +39,10 @@ class ventana_juego:
         self.jugador.camara[2] = (self.mapa_juego.alto_mapa + y - self.jugador.hitbox.bottom - self.jugador.hitbox.height / 2)
         self.jugador.camara[1] = (self.mapa_juego.ancho_mapa + x - self.jugador.hitbox.right - self.jugador.hitbox.width / 2)
         self.jugador.camara[3] = (-x + self.jugador.hitbox.left)
-        self.enemigo.update()
-        self.jugador.update()
+
+        for entidad in self.entidades:
+            if entidad.vivo:
+                entidad.update()
+
+        #pygame.display.set_caption(f'{type(self.jugador.color)}')
 

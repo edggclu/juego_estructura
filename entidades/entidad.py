@@ -1,24 +1,38 @@
 import os
-from abc import abstractmethod
+from abc import abstractmethod, ABC
+from os.path import split
+
 import pygame
 
-class entidad():
+class entidad(ABC):
     @abstractmethod
-    def __init__(self, x, y, interfaz, nombre):
+    def __init__(self, x, y, interfaz, nombre, arma):
+        self.arma = arma
+        self.color = nombre.split('_')[1]
+        self.velocidad = self.arma[self.color]["Velocidad"]
+        self.fuerza = self.arma[self.color]["Fuerza"]
+        self.veneno = self.arma[self.color]["Veneno"]
+
+        self.vivo = True
+
+        #self.velocidad = 3
 
         self.interfaz = interfaz
-        self.velocidad = 0
-        self.attack_action = False
         self.contador_sprite = 0
-        self.offset = 8
+        self.offset = 24//self.velocidad
         self.steps = 0
+
         self.nombre = nombre
+        self.arma = arma
         self.run_list = self.cargar_sprites(f'{self.nombre}/Run')
         self.idle_list = self.cargar_sprites(f'{self.nombre}/Idle')
         self.attack_list = self.cargar_sprites(f'{self.nombre}/Attack')
+        self.death_list = self.cargar_sprites(f'{self.nombre}/Death')
         self.lista_actual_de_sprites = self.idle_list
         self.image = self.lista_actual_de_sprites[0]
         #self.image = pygame.image.load(f'assets/Sprites/{nombre}/Idle/{os.listdir(f'assets/Sprites/{nombre}/Idle')[0]}')
+
+        self.attack_action = False
         self.flip = False
         self.alpha = 255
 
@@ -54,7 +68,9 @@ class entidad():
             self.steps += 1
             if self.steps >= len(self.lista_actual_de_sprites)-1:
                 self.steps = 0
-                if self.attack_action: self.offset = 8; self.attack_action = False
+                if self.attack_action: self.offset = 24//self.velocidad; self.attack_action = False
+                if self.lista_actual_de_sprites == self.death_list:
+                    self.vivo = False
             self.image = self.lista_actual_de_sprites[self.steps]
             self.contador_sprite = 0
         self.contador_sprite += 1

@@ -11,6 +11,8 @@ entidades/__pycache__/
 ventanas/cargar_partida/__pycache__/
 ventanas/juego/__pycache__/
 ventanas/menu/__pycache__/
+ventanas/nueva_partida/__pycache__/
+ventanas/__pycache__/
 __pycache__/
 *.pyo
 *.pyd
