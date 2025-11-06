@@ -36,8 +36,8 @@ class ventana_nueva_partida:
         self.botones_armas = [None, None, None, None]
         self.flecha = pygame.image.load('ventanas/nueva_partida/Flecha.png')
         self.flecha = pygame.transform.scale(self.flecha, (200,200))
-        self.x_flecha = 0
-        self.y_flecha = 0
+        self.x_flecha = -100
+        self.y_flecha = -100
         self.indice_boton = 0
 
         self.ventana_del_juego = None

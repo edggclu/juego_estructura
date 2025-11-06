@@ -10,7 +10,7 @@ class enemigo(entidad):
         self.jugador = jugador
         self.lista_actual_de_sprites = self.run_list
 
-        self.vida = 10
+        #self.vida = 10
         self.vof = self.hitbox.width / self.vida
 
 
@@ -49,18 +49,20 @@ class enemigo(entidad):
             self.vida -= self.jugador.fuerza
             self.forma.x += direccion[0]*-50
             self.dano = True
-            print('Daño')
+            #print('Daño')
 
         if direccion.length() > 0:
             direccion.normalize_ip()
         if not self.attack_action:
             if self.vida > 0:
                 self.forma.move_ip(direccion * self.velocidad - (self.jugador.delta_x, self.jugador.delta_y))
+            else:
+                self.forma.move_ip(direccion - (self.jugador.delta_x, self.jugador.delta_y))
 
 
         if self.vida <= 0:
             if self.lista_actual_de_sprites is not self.death_list:
-                self.velocidad = 0
+                #self.velocidad = 0
                 self.contador_sprite = 0
                 self.lista_actual_de_sprites = self.death_list
                 self.offset = 4

@@ -3,6 +3,7 @@ import pygame
 from entidades.enemigo import enemigo
 from entidades.jugador import jugador
 from mapa import Map
+import random
 
 
 class ventana_juego:
@@ -21,9 +22,14 @@ class ventana_juego:
 
         # Instancia del enemigo
         self.enemigo = enemigo(200, 100, ventana, f'vampire_{self.jugador.color}', self.jugador, self.partida.arma)
-        self.enemigo.vida = 10
+        #self.enemigo.vida = 10
 
         self.entidades = [self.jugador, self.enemigo]
+
+        for i in range(20):
+            self.entidades.append(enemigo(random.randint(100, 200), random.randint(100, 200),ventana,
+                                          f'vampire_{self.jugador.color}',
+                                          self.jugador, self.partida.arma))
         self.mapa_juego = Map("assets/mapa/mapa2.tmx")
 
         self.fondo_mapa = self.mapa_juego.crear_mapa()

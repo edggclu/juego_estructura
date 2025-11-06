@@ -43,6 +43,7 @@ class entidad(ABC):
         self.hitbox_attack = pygame.rect.Rect((self.hitbox.centerx + (self.hitbox.width / 2 * 1.6)), self.hitbox.y + 40,
                                               30, self.hitbox.height + 10)
         self.vida = 15
+        self.max_vida = self.vida
         self.vof = self.hitbox.width / self.vida
         self.vida_rect = pygame.rect.Rect(self.hitbox.left,self.hitbox.bottom +5,self.hitbox.width,8)
         self.color_vida = (255,0,0)
@@ -94,8 +95,9 @@ class entidad(ABC):
 
     def dibujar_vida(self):
         self.vida_rect.left, self.vida_rect.top = self.hitbox.left,self.hitbox.bottom +5
-        pygame.draw.rect(self.interfaz,self.color_vida,self.vida_rect,1)
-        pygame.draw.rect(self.interfaz,self.color_vida,(self.vida_rect.left,self.vida_rect.top,self.vof * self.vida,self.vida_rect.height))
+        if self.vida < self.max_vida:
+            pygame.draw.rect(self.interfaz,self.color_vida,self.vida_rect,1)
+            pygame.draw.rect(self.interfaz,self.color_vida,(self.vida_rect.left,self.vida_rect.top,self.vof * self.vida,self.vida_rect.height))
 
         a = -2.5 if self.flip else 1
         self.hitbox_attack.x = self.hitbox.centerx + (self.hitbox.width/2 * a)

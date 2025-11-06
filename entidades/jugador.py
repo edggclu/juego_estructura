@@ -4,7 +4,7 @@ from entidades.entidad import entidad
 class jugador(entidad):
     def __init__(self, x, y, interfaz, nombre, arma):
         super().__init__(x, y, interfaz, nombre, arma)
-
+        self.velocidad += 1
         self.mover_arriba = False
         self.mover_abajo = False
         self.mover_derecha = False
