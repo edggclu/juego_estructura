@@ -11,7 +11,7 @@ class entidad(ABC):
         self.color = nombre.split('_')[1]
         self.velocidad = self.arma[self.color]["Velocidad"]
         self.fuerza = self.arma[self.color]["Fuerza"]
-        self.veneno = self.arma[self.color]["Veneno"]
+        self.curacion = self.arma[self.color]["Curacion"]
 
         self.vivo = True
 
@@ -23,7 +23,6 @@ class entidad(ABC):
         self.steps = 0
 
         self.nombre = nombre
-        self.arma = arma
         self.run_list = self.cargar_sprites(f'{self.nombre}/Run')
         self.idle_list = self.cargar_sprites(f'{self.nombre}/Idle')
         self.attack_list = self.cargar_sprites(f'{self.nombre}/Attack')

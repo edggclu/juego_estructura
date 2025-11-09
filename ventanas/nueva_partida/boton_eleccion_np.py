@@ -17,6 +17,9 @@ class boton_eleccion_np():
 
         self.lista_sprites_idle = self.setup("Idle")
         self.lista_sprites_attack = self.setup("Attack")
+        self.lista_sprites_run = self.setup("Run")
+        self.arreglo_de_sprites = [self.lista_sprites_idle,
+                                   self.lista_sprites_run]
         self.lista_actual_sprites = self.lista_sprites_idle
         im = self.lista_actual_sprites[0]
 
@@ -33,6 +36,8 @@ class boton_eleccion_np():
         self.contador_crecer = 0
 
         self.animar_bool = True
+        self.animar_random = False
+        self.Flip = False
         self.crecer_bool = False
         self.hover = False
         self.clicked = False
@@ -44,41 +49,63 @@ class boton_eleccion_np():
             self.hover = True
             if mouse_click == 1:
                 self.clicked = True
+                pygame.mouse.set_pos(self.ventana.get_width()/2, self.ventana.get_height()/2)
             else:
                 self.clicked = False
+            #self.animar_bool = False
         else:
-            self.lista_actual_sprites = self.lista_sprites_idle
-            #self.steps = 0
+            #self.animar_random = True
+            #self.lista_actual_sprites = self.lista_sprites_idle
             self.hover = False
-
 
         if self.animar_bool:
             self.animar()
         else:
             self.steps = 0
+            self.Flip = False
             self.lista_actual_sprites = self.lista_sprites_idle
             self.image = self.lista_actual_sprites[self.steps]
 
         self.crecer()
+
+        flip_image = pygame.transform.flip(self.image, self.Flip, False)
         self.ventana.blit(self.fondo, self.fondo_rect)
-        self.ventana.blit(self.image, self.image_rect)
+        self.ventana.blit(flip_image, self.image_rect)
+
 
     def animar(self):
+        #flip
         if self.contador_sprite == self.offset:
             self.steps += 1
             if self.steps >= len(self.lista_actual_sprites) - 1:
                 self.steps = 0
+                if self.animar_random:
+                    self.lista_actual_sprites = self.arreglo_de_sprites[random.randint(0, 1)]
+                    self.Flip = True if random.randint(0, 1) == 1 else False
             self.image = self.lista_actual_sprites[self.steps]
             self.contador_sprite = 0
         self.contador_sprite += 1
 
     def crecer(self):
-        self.fondo_rect.width = self.ancho + 24
-        self.fondo_rect.height = self.alto + 24
-        self.fondo_rect.x = self.x - 24
-        self.fondo_rect.y = self.y - 24
-        self.fondo = pygame.image.load('ventanas/menu/BaseMenu.png')
-        self.fondo = pygame.transform.scale(self.fondo,(self.fondo_rect.width,self.fondo_rect.width))
+        if self.hover:
+            if self.contador_crecer < 24:
+                self.crecer_bool = True
+                self.contador_crecer += 8
+            else:
+                self.crecer_bool = False
+        else:
+            if self.contador_crecer > 0:
+                self.crecer_bool = True
+                self.contador_crecer -=8
+            else:
+                self.crecer_bool = False
+        if self.crecer_bool:
+            self.fondo_rect.width = self.ancho + self.contador_crecer
+            self.fondo_rect.height = self.alto + self.contador_crecer
+            self.fondo_rect.x = self.x - self.contador_crecer/2
+            self.fondo_rect.y = self.y - self.contador_crecer/2
+            self.fondo = pygame.image.load('ventanas/menu/BaseMenu.png')
+            self.fondo = pygame.transform.scale(self.fondo,(self.fondo_rect.width,self.fondo_rect.width))
 
     def setup(self, Action='Idle'):
         dir = f'assets/Sprites/{self.clase_personaje}_{self.color_personaje}/{Action}'
