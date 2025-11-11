@@ -2,19 +2,20 @@
 import pygame
 class boton_cargar_partida:
 
-    def __init__(self, ventana,x,y, imagen_personaje, imagen_espada, velocidad, daño_espada,  nombre_jugador):
+    def __init__(self, ventana,x,y, imagen_personaje, velocidad, daño_espada,  nombre_jugador):
         pygame.font.init()  #Modulo fuente para los textos
         self.font = pygame.font.Font(None, 24)  # Fuente por defecto, tamaño 24
 
         #CARGA LAS IMAGENES QUE SE USARÁN DENTRO DEL BOTÓN
-        self.imagen_boton = pygame.image.load("ventanas/menu/Boton.png")        #Imagen del botón
+        self.imagen_boton = pygame.image.load("assets/Menu/Boton.png")        #Imagen del botón
         self.imagen_personaje = pygame.image.load(imagen_personaje)   #Imagen Personaje
-        self.imagen_espada = pygame.image.load(imagen_espada)     #Imagen espada
+        self.imagen_espada = pygame.image.load("assets/Menu/espada_default.png")     #Imagen espada
+        #self.imagen_tiempo = pygame.image.load()
 
         #DEFINE EL TAMAÑO DE LAS IMAGENES
         self.imagen_boton = pygame.transform.scale(self.imagen_boton, (430,125))   #Botón
-        self.imagen_personaje = pygame.transform.scale(self.imagen_personaje, (50,50))    #Personaje
-        self.imagen_espada = pygame.transform.scale(self.imagen_espada, (50,50))    #Espada
+        self.imagen_personaje = pygame.transform.scale(self.imagen_personaje, (130,130))    #Personaje
+        self.imagen_espada = pygame.transform.scale(self.imagen_espada, (75,75))    #Espada
 
         self.ventana = ventana
 
@@ -27,8 +28,8 @@ class boton_cargar_partida:
         self.imagen_boton_rect.topleft = (x,y)
 
         #POSICIONAMIENTO DE LAS IMAGENES
-        self.imagen_personaje_rect.left = self.imagen_boton_rect.left + 20
-        self.imagen_personaje_rect.centery = self.imagen_boton_rect.centery   #Lo centra en la posición Y
+        self.imagen_personaje_rect.left = self.imagen_boton_rect.left
+        self.imagen_personaje_rect.centery = self.imagen_boton_rect.centery - 25   #Lo centra en la posición Y
 
         self.imagen_espada_rect.left = self.imagen_personaje_rect.right + 10
         self.imagen_espada_rect.centery = self.imagen_boton_rect.centery      #Lo centra en la posición Y

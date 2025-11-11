@@ -20,7 +20,7 @@ menu_nueva_partida = ventana_nueva_partida(ventana)
 cargar_menu = ventana_cargar_partida(ventana)
 juego = None
 
-btn_regresar_img = pygame.image.load('ventanas/menu/BotonAtras.png')
+btn_regresar_img = pygame.image.load('assets/Menu/BotonAtras.png')
 btn_regresar_img = pygame.transform.scale(btn_regresar_img, (100,100))
 btn_regresar_rect = btn_regresar_img.get_rect()
 btn_regresar_rect.x = 25
