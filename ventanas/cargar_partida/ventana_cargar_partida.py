@@ -17,8 +17,6 @@ class ventana_cargar_partida:
         #Define el tamaño de la imagen de fondo
         self.fondo = pygame.transform.scale(self.fondo, (self.ventana.get_width(), self.ventana.get_height()))
 
-
-
         #POSICIONES X y Y DE LOS BOTONES
         pos_x = self.ventana.get_width() / 100 * 1         #Todos los botones estarán alineados en X
         pos_y1 = self.ventana.get_height() / 100 * 13       #Y del boton 1
@@ -61,6 +59,12 @@ class ventana_cargar_partida:
         self.boton2.draw()
         self.boton3.draw()
         self.boton4.draw()
+
+        #Dibuja el cuadro con la información
+        self.Recuadro_informacion()
+
+
+    def Recuadro_informacion(self):
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #MOSTRAR CUADRO DE INFORMACIÓN A LA DERECHA
 
@@ -80,14 +84,8 @@ class ventana_cargar_partida:
 
         #Dibuja siempre el botón
         self.ventana.blit(self.cuadro_detalles_img, self.cuadro_detalles_rect)
-
-            # --- (AQUÍ PUEDES PONER TU CÓDIGO) ---
-            # Ejemplo para mostrar el nombre del jugador de ese botón:
-
-            # font_ejemplo = pygame.font.Font(None, 36) # Usa la fuente que quieras
-            # nombre_txt = font_ejemplo.render(
-            #     f"Jugador: {boton_a_mostrar.nombre_jugador}", True, (255, 255, 255)
-            # )
-            # # Posiciona el texto dentro del cuadro de detalles
-            # self.ventana.blit(nombre_txt, (self.cuadro_detalles_rect.x + 30, self.cuadro_detalles_rect.y + 30))
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        #DIBUJA LA INFORMACIÓN DEL CUADRO
+
+        #Carga los recursos de las imagenes
+        boton_cargar_partida.__init__()
