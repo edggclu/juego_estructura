@@ -19,6 +19,3 @@ class partida:
                 "Verdes": 0
             }
         }
-
-
-

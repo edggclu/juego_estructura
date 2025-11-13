@@ -25,10 +25,10 @@ class ventana_cargar_partida:
         pos_y4 = self.ventana.get_height() / 100 * 70       #Y del boton 4
 
         #CREACION DE INSTANCIAS DE LOS BOTONES SEPARADOS
-        self.boton1 = boton_cargar_partida(self.ventana, pos_x, pos_y1, "56:06" ,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png" ,5, 5,"Luis miguel")
-        self.boton2 = boton_cargar_partida(self.ventana, pos_x, pos_y2, "56:06" ,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png", 5, 5,"Andresaurio espinoza")
-        self.boton3 = boton_cargar_partida(self.ventana, pos_x, pos_y3, "56:06" ,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png", 5, 5,"Puñaron")
-        self.boton4 = boton_cargar_partida(self.ventana, pos_x, pos_y4, "56:06" , "assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png", 5, 5, "José José")
+        self.boton1 = boton_cargar_partida(self.ventana, pos_x, pos_y1, "56:06" ,325,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png" ,5, 5,"Luis miguel")
+        self.boton2 = boton_cargar_partida(self.ventana, pos_x, pos_y2, "56:06" ,325,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png", 5, 5,"Andresaurio espinoza")
+        self.boton3 = boton_cargar_partida(self.ventana, pos_x, pos_y3, "56:06" ,325,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png", 5, 5,"Puñaron")
+        self.boton4 = boton_cargar_partida(self.ventana, pos_x, pos_y4, "56:06" , 325,"assets/Sprites/skeleton_Base/Idle/skeleton_Base_Idle0.png", 5, 5, "José José")
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         #CREACIÓN DE CUADRO CON INFORMACIÓN A LA DERECHA
 
@@ -88,4 +88,4 @@ class ventana_cargar_partida:
         #DIBUJA LA INFORMACIÓN DEL CUADRO
 
         #Carga los recursos de las imagenes
-        boton_cargar_partida.__init__()
+        #boton_cargar_partida.__init__()
