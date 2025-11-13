@@ -1,18 +1,12 @@
 import pygame
 from ventanas.cargar_partida.clase_boton_cargar_partida import boton_cargar_partida
+from ventanas.cargar_partida.PanelInfoBase import PanelInfoBase
 
 class ventana_cargar_partida:
     def __init__(self, ventana):
         #Define imagen de ventana
         self.ventana = ventana
         self.fondo = pygame.image.load('assets/Menu/Fondo.png')
-
-        # Carga la imagen de la base donde se colocaran los botones / Reescala imagen
-        self.base = pygame.image.load('assets/Menu/BaseMenu.png')
-        self.base = pygame.transform.scale(self.base,(self.ventana.get_width() / 100 * 50, self.ventana.get_height() / 100 * 90))
-
-        #Posicion de la ventana donde se colocaran los botones
-        self.ventana.blit(self.base, (self.ventana.get_width() / 20, self.ventana.get_height() / 20))
 
         #Define el tamaño de la imagen de fondo
         self.fondo = pygame.transform.scale(self.fondo, (self.ventana.get_width(), self.ventana.get_height()))
@@ -43,16 +37,32 @@ class ventana_cargar_partida:
 
         #POSICIONA EL CUADRO
         self.cuadro_detalles_rect.center = (self.ventana.get_width() * 0.70, self.ventana.get_height() / 2)
+
+        #SE ESTABLECE EL BOTÓN 1 COMO LA INFORMACIÓN POR DEFECTO (PARA ACTUALIZAR LA INFORMACIÓN DEL CUADRO GRANDE)
+        self.boton_info_actual = self.boton1
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     def update(self):
         # Posición de la imagen de fondo
         self.ventana.blit(self.fondo, (0, 0))
 
-        #REVISA SI EL MOUSE ESTÁ ENCIMA DEL MARCO DE LA IMAGEN
+        # REVISA SI EL MOUSE ESTÁ ENCIMA DEL MARCO DE LA IMAGEN
         self.boton1.update()
         self.boton2.update()
         self.boton3.update()
         self.boton4.update()
+
+        # --- ¡CAMBIO IMPORTANTE 2! ---
+        # 3. Actualizamos cuál es el botón "activo" SI el mouse está encima de uno.
+        # Si no está encima de ninguno, 'self.boton_info_actual' no cambia.
+        if self.boton1.hovered:
+            self.boton_info_actual = self.boton1
+        elif self.boton2.hovered:
+            self.boton_info_actual = self.boton2
+        elif self.boton3.hovered:
+            self.boton_info_actual = self.boton3
+        elif self.boton4.hovered:
+            self.boton_info_actual = self.boton4
+        # --- Fin del cambio ---
 
         #DIBUJA LAS IMAGENES DENTRO DEL LOS BOTONES
         self.boton1.draw()
@@ -60,32 +70,10 @@ class ventana_cargar_partida:
         self.boton3.draw()
         self.boton4.draw()
 
-        #Dibuja el cuadro con la información
+        #Dibuja el cuadro con la información (usando la nueva lógica)
         self.Recuadro_informacion()
 
 
     def Recuadro_informacion(self):
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        #MOSTRAR CUADRO DE INFORMACIÓN A LA DERECHA
-
-        #Variable para guardar qué botón mostrar
-        boton_a_mostrar = self.boton1
-
-        #Comprueba qué botón tiene el mouse encima
-        if self.boton1.hovered:
-            boton_a_mostrar = self.boton1
-        elif self.boton2.hovered:
-            boton_a_mostrar = self.boton2
-        elif self.boton3.hovered:
-            boton_a_mostrar = self.boton3
-        elif self.boton4.hovered:
-            boton_a_mostrar = self.boton4
-
-
-        #Dibuja siempre el botón
-        self.ventana.blit(self.cuadro_detalles_img, self.cuadro_detalles_rect)
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        #DIBUJA LA INFORMACIÓN DEL CUADRO
-
-        #Carga los recursos de las imagenes
-        #boton_cargar_partida.__init__()
+        panel_detalles = PanelInfoBase(self.ventana, self.boton_info_actual)
+        panel_detalles.draw()
