@@ -1,19 +1,40 @@
+import random
 
 import pygame
 class boton_cargar_partida:
 
-    def __init__(self, ventana, x, y, tiempo, dinero_acumulado, imagen_personaje, velocidad, enemigos_eliminados, nombre_jugador):
+    def __init__(self, ventana, x, y, tiempo, imagen_personaje, nombre_jugador):
         pygame.font.init()  #Modulo fuente para los textos
         self.font = pygame.font.Font(None, 24)  # Fuente por defecto, tamaño 24
         self.ventana = ventana
         self.hovered = False            # Muestra el cuadro a la derecha con las estadisticas
 
+        # Conteo de Esqueletos (Aleatorio entre 0 y 100)
+        self.kills_esqueleto_base = (random.randint(0, 100))
+        self.kills_esqueleto_azul = (random.randint(0, 100))
+        self.kills_esqueleto_verde = (random.randint(0, 100))
+        self.kills_esqueleto_rojo = (random.randint(0, 100))
+
+        # Conteo de Vampiros (Aleatorio entre 0 y 100)
+        self.kills_vampiro_base = (random.randint(0, 100))
+        self.kills_vampiro_azul = (random.randint(0, 100))
+        self.kills_vampiro_verde = (random.randint(0, 100))
+        self.kills_vampiro_rojo = (random.randint(0, 100))
+
+
         #TEXTOS A USAR EN EL BOTÓN
         self.nombre_jugador = str(nombre_jugador)           #Nombre de jugador
-        self.enemigos_eliminados = str(enemigos_eliminados) #Enemigos eliminados
-        self.velocidad_espada = str(velocidad)              #Velocidad de espada
-        self.tiempo_partida = str(tiempo)                   #Tiempo transcurrido
-        self.dinero_acumulado = str(dinero_acumulado)       #Dinero acumulado
+
+        # Enemigos eliminados
+        self.enemigos_eliminados = str(self.kills_vampiro_azul + self.kills_vampiro_base + self.kills_vampiro_rojo +
+                                    self.kills_vampiro_verde+ self.kills_esqueleto_verde + self.kills_esqueleto_azul
+                                    + self.kills_esqueleto_base +
+                                    self.kills_esqueleto_rojo)
+
+        self.tiempo_partida = (str(tiempo) + " minutos")                  #Tiempo transcurrido
+        self.dinero_acumulado = str(random.randint(0, 999))          #Dinero acumulado
+
+        self.ruta_imagen_personaje = imagen_personaje       #Esta variable se usa para que PanelInfoBase lo tome y pueda cambiar la imagen del personaje
 
         #CARGA LAS IMAGENES QUE SE USARÁN DENTRO DEL BOTÓN
         self.imagen_boton = pygame.image.load("assets/Menu/Boton.png")        #Imagen del botón
@@ -42,15 +63,15 @@ class boton_cargar_partida:
 
         #POSICIONAMIENTO DE LAS IMAGENES
         self.imagen_personaje_rect.left = self.imagen_boton_rect.left              #Lo posiciona en X
-        self.imagen_personaje_rect.centery = self.imagen_boton_rect.centery - 25   #Lo centra en la posición Y
+        self.imagen_personaje_rect.centery = self.imagen_boton_rect.centery - 22   #Lo centra en la posición Y
 
-        self.imagen_espada_rect.left = self.imagen_boton_rect.left + 180          #Lo posiciona en X
+        self.imagen_espada_rect.left = self.imagen_boton_rect.left + 230          #Lo posiciona en X
         self.imagen_espada_rect.centery = self.imagen_boton_rect.centery + 19     #Lo centra en la posición Y
 
         self.imagen_tiempo_rect.left = self.imagen_boton_rect.left + 115          #Lo posiciona en X
         self.imagen_tiempo_rect.centery = self.imagen_boton_rect.centery + 10     #Lo centra en la posición Y
 
-        self.imagen_bolsaDinero_rect.left = self.imagen_boton_rect.left + 260
+        self.imagen_bolsaDinero_rect.left = self.imagen_boton_rect.left + 330
         self.imagen_bolsaDinero_rect.centery = self.imagen_boton_rect.centery +10
 
 
@@ -93,10 +114,10 @@ class boton_cargar_partida:
          self.texto_tiempo_rect.left = self.imagen_boton_rect.left + 150
          self.texto_tiempo_rect.centery = self.imagen_boton_rect.centery + 15
 
-         self.texto_espada_rect.left = self.imagen_boton_rect.left + 235
+         self.texto_espada_rect.left = self.imagen_boton_rect.left + 285
          self.texto_espada_rect.centery = self.imagen_boton_rect.centery + 15
 
-         self.texto_BolsaDinero_rect.left = self.imagen_boton_rect.left + 295
+         self.texto_BolsaDinero_rect.left = self.imagen_boton_rect.left + 365
          self.texto_BolsaDinero_rect.centery = self.imagen_boton_rect.centery + 15
 
          #LOS DIBUJA
