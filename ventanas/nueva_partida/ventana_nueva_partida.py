@@ -10,7 +10,7 @@ from ventanas.partida import partida
 class ventana_nueva_partida:
     def __init__(self, ventana):
         self.ventana = ventana
-        self.fondo = pygame.image.load('ventanas/menu/Fondo.png')
+        self.fondo = pygame.image.load('assets/Menu/Fondo.png')
         self.fondo = pygame.transform.scale(self.fondo, (self.ventana.get_width(), self.ventana.get_height()))
         self.fase = 1
         self.armas_stats = [
@@ -34,7 +34,7 @@ class ventana_nueva_partida:
                                                'vampire',
                                                'Base')
         self.botones_armas = [None, None, None, None]
-        self.flecha = pygame.image.load('ventanas/nueva_partida/Flecha.png')
+        self.flecha = pygame.image.load('assets/Menu/Flecha.png')
         self.flecha = pygame.transform.scale(self.flecha, (200,200))
         self.x_flecha = -1000
         self.y_flecha = -1000
@@ -45,7 +45,7 @@ class ventana_nueva_partida:
         self.mouse_pos = pygame.mouse.get_pos()
         self.mouse_click = pygame.mouse.get_pressed()[0]
 
-        self.cuadro_estadisticas_img = pygame.image.load("ventanas/menu/Cuadro.png")
+        self.cuadro_estadisticas_img = pygame.image.load("assets/Menu/Cuadro.png")
         self.cuadro_estadisticas_img = pygame.transform.scale(self.cuadro_estadisticas_img, (800,350))
         self.cuadro_estadisticas_rect = pygame.rect.Rect(200,350,1050,550)
 

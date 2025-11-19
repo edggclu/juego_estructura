@@ -7,7 +7,7 @@ class boton:
         self.texto_surface = texto
         self.ventana = ventana
         self.orden = orden
-        self.imagen = pygame.image.load("ventanas/menu/Boton.png")
+        self.imagen = pygame.image.load("assets/Menu/Boton.png")
         self.alto = 85
         self.ancho = 345
         self.imagen = pygame.transform.scale(self.imagen, (self.ancho, self.alto))
@@ -19,7 +19,7 @@ class boton:
 
 
     def setup(self):
-        boton = pygame.image.load("ventanas/menu/Boton.png")
+        boton = pygame.image.load("assets/Menu/Boton.png")
         boton = pygame.transform.scale(boton, (self.ancho, self.alto))
 
         self.boton_rect = pygame.Rect(0, 0, boton.get_width(), boton.get_height())
@@ -48,7 +48,7 @@ class boton:
 
     def animar(self, bln):
         if bln:
-            boton = pygame.image.load("ventanas/menu/Boton.png")
+            boton = pygame.image.load("assets/Menu/Boton.png")
             boton = pygame.transform.scale(boton, (self.ancho + 16, self.alto + 16))
 
             self.boton_rect = pygame.Rect(0, 0, boton.get_width(), boton.get_height())
@@ -60,7 +60,7 @@ class boton:
             self.texto_rect.y = (self.boton_rect.y + self.boton_rect.height / 2) - self.texto_surface.get_height() / 2
             self.imagen = boton
         else:
-            boton = pygame.image.load("ventanas/menu/Boton.png")
+            boton = pygame.image.load("assets/Menu/Boton.png")
             boton = pygame.transform.scale(boton, (self.ancho, self.alto))
 
             self.boton_rect = pygame.Rect(0, 0, boton.get_width(), boton.get_height())

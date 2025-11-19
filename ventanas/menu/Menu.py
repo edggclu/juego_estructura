@@ -13,7 +13,7 @@ class Menu:
         self.setup()
 
     def setup(self):
-        self.fondo_menu = pygame.image.load("ventanas/menu/Fondo.png")
+        self.fondo_menu = pygame.image.load("assets/Menu/Fondo.png")
         self.fondo_menu = pygame.transform.scale(self.fondo_menu, (self.ventana.get_width(), self.ventana.get_height()))
         self.boton_nueva_partida = boton("Nueva Partida", self.ventana, 0)
         self.cargar_partida = boton("Cargar Partida",self.ventana, 1)

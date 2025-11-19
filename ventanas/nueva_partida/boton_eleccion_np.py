@@ -23,7 +23,7 @@ class boton_eleccion_np():
         self.lista_actual_sprites = self.lista_sprites_idle
         im = self.lista_actual_sprites[0]
 
-        self.fondo = pygame.image.load('ventanas/menu/BaseMenu.png')
+        self.fondo = pygame.image.load('assets/Menu/BaseMenu.png')
         self.fondo = pygame.transform.scale(self.fondo,(self.ancho,self.alto))
         self.fondo_rect = pygame.rect.Rect(self.x, self.y, self.ancho, self.alto)
         self.image = im
@@ -104,7 +104,7 @@ class boton_eleccion_np():
             self.fondo_rect.height = self.alto + self.contador_crecer
             self.fondo_rect.x = self.x - self.contador_crecer/2
             self.fondo_rect.y = self.y - self.contador_crecer/2
-            self.fondo = pygame.image.load('ventanas/menu/BaseMenu.png')
+            self.fondo = pygame.image.load('assets/Menu/BaseMenu.png')
             self.fondo = pygame.transform.scale(self.fondo,(self.fondo_rect.width,self.fondo_rect.width))
 
     def setup(self, Action='Idle'):
