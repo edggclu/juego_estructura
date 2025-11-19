@@ -16,7 +16,7 @@ class jugador(entidad):
         self.idle = True
         self.flip = False
 
-        self.vida = 25
+        #self.vida = 25
         self.vof = self.hitbox.width / self.vida
         self.gid_lados = (0,0,0,0)
 
@@ -70,7 +70,7 @@ class jugador(entidad):
         # Mueve la camara del personaje con el mapa
         self.update_camara()
 
-        pygame.display.set_caption(f'{(self.relative_x, self.relative_y)}')
+        #pygame.display.set_caption(f'{(self.relative_x, self.relative_y)}')
 
         self.forma.x += self.delta_x
         self.forma.y += self.delta_y

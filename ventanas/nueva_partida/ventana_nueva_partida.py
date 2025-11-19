@@ -135,7 +135,7 @@ class ventana_nueva_partida:
                                                       self.lista_colores[i])
             self.botones_armas[i].animar_bool = True
             self.botones_armas[i].lista_actual_sprites = self.botones_armas[i].lista_sprites_attack
-            self.botones_armas[i].offset = 16//self.armas_stats[i][self.lista_colores[i]]["Velocidad"]
+            self.botones_armas[i].offset = 4
 
         # Pone la flecha en el primer boton default
         btn = self.botones_armas[0]

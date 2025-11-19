@@ -42,6 +42,7 @@ while run:
             menu.cargar_partida.clicked = False
             estado = 'cargar'
         menu.update()
+        mostrar_boton_regresar = False
     if estado == 'ventana_nueva_partida':
         mostrar_boton_regresar = True
         menu_nueva_partida.update()
