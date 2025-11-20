@@ -56,14 +56,11 @@ while run:
         mostrar_boton_regresar = True
         cargar_menu.update()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-        if estado == 'juego':
-            if event.type == pygame.KEYDOWN:
-                juego.jugador.key_down(event)
-            if event.type == pygame.KEYUP:
-                juego.jugador.key_up(event)
+    if estado != 'juego':
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
 
     if mostrar_boton_regresar:
         if btn_regresar_rect.collidepoint(pygame.mouse.get_pos()):

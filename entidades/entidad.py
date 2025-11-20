@@ -1,6 +1,5 @@
 import os
 from abc import abstractmethod, ABC
-from os.path import split
 
 import pygame
 
