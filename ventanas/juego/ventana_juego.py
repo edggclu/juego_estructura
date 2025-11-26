@@ -64,7 +64,7 @@ class ventana_juego:
         self.tiempo_proximo_spawn = random.randint(1000, 3000)
 
         self.entidades = [self.jugador]
-        self.agregar_enemigo(20, 20, 'skeleton', 'Blue')
+        #self.agregar_enemigo(20, 20, 'skeleton', 'Blue')
 
     def update(self):
         # --- 1. PROCESAR EVENTOS ---

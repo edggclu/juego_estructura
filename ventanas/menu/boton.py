@@ -1,8 +1,9 @@
-from turtledemo.clock import setup
-
 import pygame
+
+# Clase boton para el menu
 class boton:
     def __init__(self, texto, ventana , orden):
+        # Inicializacion de atributos y recursos graficos
         self.texto = texto
         self.texto_surface = texto
         self.ventana = ventana
@@ -18,6 +19,7 @@ class boton:
         self.clicked = False
 
 
+    # Configuracion de posicion y renderizado de texto
     def setup(self):
         boton = pygame.image.load("assets/Menu/Boton.png")
         boton = pygame.transform.scale(boton, (self.ancho, self.alto))
@@ -33,6 +35,7 @@ class boton:
         self.texto_rect.y = (self.boton_rect.y + self.boton_rect.height / 2) - self.texto_surface.get_height() / 2
         self.imagen = boton
 
+    # Logica de interaccion con el mouse
     def update(self):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()[0]
@@ -46,6 +49,7 @@ class boton:
             self.animar(False)
 
 
+    # Efecto visual de escalado (Hover)
     def animar(self, bln):
         if bln:
             boton = pygame.image.load("assets/Menu/Boton.png")
@@ -71,4 +75,3 @@ class boton:
             self.texto_rect.x = (self.boton_rect.x + self.boton_rect.width / 2) - self.texto_surface.get_width() / 2
             self.texto_rect.y = (self.boton_rect.y + self.boton_rect.height / 2) - self.texto_surface.get_height() / 2
             self.imagen = boton
-

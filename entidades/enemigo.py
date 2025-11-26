@@ -1,10 +1,11 @@
 import pygame
-import random  # Necesario para la dirección aleatoria
+import random
 from entidades.entidad import entidad
 
-
+# Clase para la gestion de enemigos que hereda de entidad
 class enemigo(entidad):
     def __init__(self, x, y, interfaz, nombre, jugador, arma):
+        # Inicializacion de la clase padre
         super().__init__(x, y, interfaz, nombre, arma)
         self.jugador = jugador
         self.lista_actual_de_sprites = self.run_list
@@ -15,13 +16,14 @@ class enemigo(entidad):
         # Cálculo del Campo de Visión (Inversamente proporcional)
         self.rango_vision = 1000 / max(1, self.velocidad)
 
-        # --- VARIABLES PARA PATRULLAJE (NUEVO) ---
+        # Variables para el comportamiento de patrulla aleatoria
         self.ultimo_cambio_accion = pygame.time.get_ticks()
         self.tiempo_proxima_accion = random.randint(1000, 3000)  # Tiempo inicial aleatorio
         self.accion_actual = 'idle'  # 'idle' o 'run'
         self.direccion_patrulla = pygame.math.Vector2(0, 0)
 
     def mover(self):
+        # Calculo de vectores y distancia respecto al jugador
         posicion_enemigo = pygame.math.Vector2(self.forma.center)
         posicion_jugador = pygame.math.Vector2(self.jugador.forma.center)
 
@@ -32,9 +34,7 @@ class enemigo(entidad):
         # Variable para saber si debemos movernos por lógica de IA (Perseguir o Patrullar)
         velocidad_ia = pygame.math.Vector2(0, 0)
 
-        # --- LÓGICA DE COMPORTAMIENTO ---
-
-        # Caso 1: Jugador en rango -> PERSEGUIR
+        # Logica de persecucion si el jugador esta en rango
         if distancia < self.rango_vision:
             # Lógica de dirección y Flip basada en el JUGADOR
             if direccion[0] > 0:
@@ -43,7 +43,7 @@ class enemigo(entidad):
                 self.flip = True
 
             if not self.attack_action:
-                # ¿Está lo suficientemente cerca para atacar?
+                # Verificacion de distancia para iniciar ataque
                 if abs(direccion[0]) < 30 and abs(direccion[1]) < 33:
                     self.attack_action = True
                     self.steps = 0;
@@ -58,11 +58,11 @@ class enemigo(entidad):
                             direccion.normalize_ip()
                         velocidad_ia = direccion * self.velocidad
 
-        # Caso 2: Jugador fuera de rango -> PATRULLAR / DEAMBULAR
+        # Logica de patrullaje cuando el jugador esta lejos
         else:
             tiempo_actual = pygame.time.get_ticks()
 
-            # ¿Es hora de cambiar de acción?
+            # Control de tiempo para cambio de estado (Idle/Run)
             if tiempo_actual - self.ultimo_cambio_accion > self.tiempo_proxima_accion:
                 self.ultimo_cambio_accion = tiempo_actual
                 self.tiempo_proxima_accion = random.randint(1000, 3000)  # Nueva duración aleatoria
@@ -94,10 +94,11 @@ class enemigo(entidad):
                     self.lista_actual_de_sprites = self.idle_list
                     velocidad_ia = pygame.math.Vector2(0, 0)
 
-        # --- LOGICA DE DAÑO Y ATAQUE (Igual que antes) ---
+        # Deteccion de colisiones y combate
         if direccion.length() > 0 and distancia < self.rango_vision:  # Normalizamos 'direccion' solo si se usará para empujes de combate
             direccion.normalize_ip()
 
+        # Aplicacion de daño y empuje al jugador
         if self.hitbox_attack.colliderect(self.jugador.hitbox) and self.attack and not self.jugador.dano:
             golpe_x = direccion[0] * 60
             golpe_y = direccion[1] * 20
@@ -107,6 +108,7 @@ class enemigo(entidad):
             self.jugador.vida -= 1
             self.jugador.update_camara()
 
+        # Recepcion de daño por parte del jugador
         if self.hitbox.colliderect(self.jugador.hitbox_attack) and self.jugador.attack:
             self.vida -= self.jugador.fuerza
             # Empuje al recibir daño
@@ -114,7 +116,7 @@ class enemigo(entidad):
                 self.forma.x += direccion[0] * -50
             self.dano = True
 
-        # --- CÁLCULO DE MOVIMIENTO DE CÁMARA (SCROLL) ---
+        # Calculo del desplazamiento relativo a la camara (Scroll)
         movimiento_camara_x = 0
         movimiento_camara_y = 0
 
@@ -132,9 +134,7 @@ class enemigo(entidad):
             movimiento_camara_y = self.jugador.velocidad
             self.delta_y = self.jugador.relative_y
 
-        # --- APLICAR MOVIMIENTO FINAL ---
-        # Movimiento Final = (Movimiento IA: Perseguir/Patrullar) + (Movimiento Cámara: Jugador moviéndose)
-
+        # Aplicacion del movimiento final (IA + Scroll)
         if self.vida > 0:
             # Sumamos el vector de velocidad calculado arriba + el ajuste de camara
             self.forma.move_ip(velocidad_ia + (movimiento_camara_x, movimiento_camara_y))
@@ -145,6 +145,7 @@ class enemigo(entidad):
             else:
                 self.forma.move_ip((movimiento_camara_x, movimiento_camara_y))
 
+        # Gestion de la muerte y cambio de sprites
         if self.vida <= 0:
             if self.lista_actual_de_sprites is not self.death_list:
                 self.contador_sprite = 0

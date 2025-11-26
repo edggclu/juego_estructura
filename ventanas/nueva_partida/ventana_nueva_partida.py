@@ -7,35 +7,43 @@ from ventanas.nueva_partida.boton_eleccion_np import boton_eleccion_np
 from ventanas.partida import partida
 
 
+# Clase para la ventana de creacion de nueva partida
 class ventana_nueva_partida:
     def __init__(self, ventana):
+        # Configuracion inicial de la ventana y fondo
         self.ventana = ventana
         self.fondo = pygame.image.load('assets/Menu/Fondo.png')
         self.fondo = pygame.transform.scale(self.fondo, (self.ventana.get_width(), self.ventana.get_height()))
         self.fase = 1
+
+        # Definicion de estadisticas base para las armas
         self.armas_stats = [
-                self.crear_arma("Base", 3, 3, 0),
-                self.crear_arma("Blue", 1, 5, 0),
-                self.crear_arma("Green", 1, 3, 1),
-                self.crear_arma("Red", 5, 2, 0),
-            ]
+            self.crear_arma("Base", 3, 3, 0),
+            self.crear_arma("Blue", 1, 5, 0),
+            self.crear_arma("Green", 1, 3, 1),
+            self.crear_arma("Red", 5, 2, 0),
+        ]
 
         self.lista_colores = ['Base', 'Blue', 'Green', 'Red']
+
+        # Botones de seleccion de personaje (Fase 1)
         self.boton_skeleton = boton_eleccion_np(self.ventana,
-                                                self.ventana.get_width()/2 - 450,
+                                                self.ventana.get_width() / 2 - 450,
                                                 self.ventana.get_height() / 2 - 400 / 2,
-                                                400,400,
+                                                400, 400,
                                                 "skeleton",
                                                 'Base')
         self.boton_vampiro = boton_eleccion_np(self.ventana,
-                                               self.ventana.get_width()/2 + 50,
+                                               self.ventana.get_width() / 2 + 50,
                                                self.ventana.get_height() / 2 - 400 / 2,
-                                               400,400,
+                                               400, 400,
                                                'vampire',
                                                'Base')
+
+        # Elementos de la interfaz para seleccion de arma (Fase 2)
         self.botones_armas = [None, None, None, None]
         self.flecha = pygame.image.load('assets/Menu/Flecha.png')
-        self.flecha = pygame.transform.scale(self.flecha, (200,200))
+        self.flecha = pygame.transform.scale(self.flecha, (200, 200))
         self.x_flecha = -1000
         self.y_flecha = -1000
         self.indice_boton = 0
@@ -46,17 +54,21 @@ class ventana_nueva_partida:
         self.mouse_click = pygame.mouse.get_pressed()[0]
 
         self.cuadro_estadisticas_img = pygame.image.load("assets/Menu/Cuadro.png")
-        self.cuadro_estadisticas_img = pygame.transform.scale(self.cuadro_estadisticas_img, (800,350))
-        self.cuadro_estadisticas_rect = pygame.rect.Rect(200,350,1050,550)
+        self.cuadro_estadisticas_img = pygame.transform.scale(self.cuadro_estadisticas_img, (800, 350))
+        self.cuadro_estadisticas_rect = pygame.rect.Rect(200, 350, 1050, 550)
 
-        # Texto estadisticas
+        # Inicializacion de textos y barras de estadisticas
         self.fuente = pygame.font.SysFont("minecraft", 30)
 
-        self.velocidad_text = texto_stat(self.ventana, "Velocidad",self.cuadro_estadisticas_rect.x + 85,self.cuadro_estadisticas_rect.y + 40, (39, 163, 245))
-        self.fuerza_txt = texto_stat(self.ventana, "Fuerza",self.velocidad_text.texto_rect.right + 110, self.velocidad_text.texto_rect.y, (204, 53, 0))
-        self.curacion_txt = texto_stat(self.ventana,"Curacion", self.fuerza_txt.texto_rect.right + 110, self.fuerza_txt.y, (31, 209, 40))
+        self.velocidad_text = texto_stat(self.ventana, "Velocidad", self.cuadro_estadisticas_rect.x + 85,
+                                         self.cuadro_estadisticas_rect.y + 40, (39, 163, 245))
+        self.fuerza_txt = texto_stat(self.ventana, "Fuerza", self.velocidad_text.texto_rect.right + 110,
+                                     self.velocidad_text.texto_rect.y, (204, 53, 0))
+        self.curacion_txt = texto_stat(self.ventana, "Curacion", self.fuerza_txt.texto_rect.right + 110,
+                                       self.fuerza_txt.y, (31, 209, 40))
 
     def update(self):
+        # Actualizacion general de la ventana y control de fases
         self.mouse_pos = pygame.mouse.get_pos()
         self.mouse_click = pygame.mouse.get_pressed()[0]
         self.ventana.fill((0, 0, 0))
@@ -67,6 +79,7 @@ class ventana_nueva_partida:
             self.fase_2()
 
     def fase_1(self):
+        # Logica de seleccion de personaje (Skeleton vs Vampire)
         self.boton_skeleton.update()
         self.boton_vampiro.update()
 
@@ -89,6 +102,7 @@ class ventana_nueva_partida:
         self.boton_skeleton.animar()
 
     def fase_2(self):
+        # Logica de seleccion de variante/arma
         for i in range(len(self.botones_armas)):
             btn = self.botones_armas[i]
             btn.update()
@@ -96,7 +110,7 @@ class ventana_nueva_partida:
                 pygame.mouse.set_cursor(pygame.cursors.ball)
                 btn.lista_actual_sprites = btn.lista_sprites_attack
                 btn.animar_bool = True
-                self.x_flecha = btn.fondo_rect.x + btn.fondo_rect.width/2 - self.flecha.get_width()/2
+                self.x_flecha = btn.fondo_rect.x + btn.fondo_rect.width / 2 - self.flecha.get_width() / 2
                 self.y_flecha = btn.fondo_rect.bottom - 80
                 self.indice_boton = i
                 btn.animar_random = False
@@ -107,17 +121,23 @@ class ventana_nueva_partida:
                 pygame.mouse.set_cursor(pygame.cursors.arrow)
                 btn.animar_bool = False
             self.botones_armas[self.indice_boton].animar_bool = True
-        pygame.display.set_caption(f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Velocidad"]}')
+        pygame.display.set_caption(
+            f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Velocidad"]}')
 
-        self.ventana.blit(self.flecha, (self.x_flecha , self.y_flecha ))
+        # Renderizado de flecha indicadora
+        self.ventana.blit(self.flecha, (self.x_flecha, self.y_flecha))
 
-
-        self.ventana.blit(self.cuadro_estadisticas_img,self.cuadro_estadisticas_rect)
-        self.velocidad_text.update("VELOCIDAD", f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Velocidad"]}')
-        self.fuerza_txt.update("FUERZA", f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Fuerza"]}')
-        self.curacion_txt.update("CURACION", f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Curacion"]}')
+        # Actualizacion y renderizado del cuadro de estadisticas
+        self.ventana.blit(self.cuadro_estadisticas_img, self.cuadro_estadisticas_rect)
+        self.velocidad_text.update("VELOCIDAD",
+                                   f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Velocidad"]}')
+        self.fuerza_txt.update("FUERZA",
+                               f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Fuerza"]}')
+        self.curacion_txt.update("CURACION",
+                                 f'{self.armas_stats[self.indice_boton][self.lista_colores[self.indice_boton]]["Curacion"]}')
 
     def nueva_partida(self):
+        # Creacion de objetos de partida y ventana de juego
         tipo = self.botones_armas[self.indice_boton].clase_personaje
         color = self.lista_colores[self.indice_boton]
         arma = dict(self.armas_stats[self.indice_boton])
@@ -126,11 +146,12 @@ class ventana_nueva_partida:
         self.ventana_del_juego = ventana_juego(self.ventana, nueva_partida)
 
     def cargar_botones_armas(self, param):
+        # Generacion dinamica de botones segun personaje seleccionado
         for i in range(0, len(self.botones_armas)):
             self.botones_armas[i] = boton_eleccion_np(self.ventana,
-                                                      65 + 250*i,
+                                                      65 + 250 * i,
                                                       self.ventana.get_height() / 2 - 300,
-                                                      200,200,
+                                                      200, 200,
                                                       param,
                                                       self.lista_colores[i])
             self.botones_armas[i].animar_bool = True
@@ -143,16 +164,19 @@ class ventana_nueva_partida:
         self.y_flecha = btn.fondo_rect.bottom - 80
 
     def crear_arma(self, color, dano, velocidad, Curacion):
+        # Helper para crear diccionarios de stats
         arma = {
-            color:{
+            color: {
                 "Fuerza": dano,
                 "Velocidad": velocidad,
                 "Curacion": Curacion
-        }}
+            }}
         return dict(arma)
 
+
+# Clase auxiliar para visualizar barras de estadisticas
 class texto_stat:
-    def __init__(self,ventana, texto, x, y, color):
+    def __init__(self, ventana, texto, x, y, color):
         self.ventana = ventana
         self.texto = texto
         self.x = x
@@ -161,22 +185,25 @@ class texto_stat:
 
         self.fuente = pygame.font.SysFont('minecraft', 30)
         self.texto_srf = self.fuente.render(self.texto, True, (255, 255, 255))
-        self.texto_rect = pygame.Rect(self.x, self.y, self.texto_srf.get_width(),self.texto_srf.get_height())
+        self.texto_rect = pygame.Rect(self.x, self.y, self.texto_srf.get_width(), self.texto_srf.get_height())
 
-        self.rectangulo_borde = pygame.Rect(self.x + self.texto_rect.width/2 - 25, self.y + 50, 60, 130)
-        self.rectangulo_relleno = pygame.Rect(self.rectangulo_borde.x, self.rectangulo_borde.bottom-26, 60, 26)
+        self.rectangulo_borde = pygame.Rect(self.x + self.texto_rect.width / 2 - 25, self.y + 50, 60, 130)
+        self.rectangulo_relleno = pygame.Rect(self.rectangulo_borde.x, self.rectangulo_borde.bottom - 26, 60, 26)
 
     def update(self, text, valor):
+        # Renderizado del titulo y valor numerico
         self.texto = text
         self.texto_srf = self.fuente.render(self.texto, True, (255, 255, 255))
         self.texto_rect = pygame.Rect(self.x, self.y, self.texto_srf.get_width(), self.texto_srf.get_height())
         self.ventana.blit(self.texto_srf, self.texto_rect)
 
         valor_srf = self.fuente.render(valor, True, (255, 255, 255))
-        valor_rect = pygame.rect.Rect(self.x + self.texto_rect.width/2 - valor_srf.get_width()/2, self.y + 200,valor_srf.get_width(), valor_srf.get_height())
+        valor_rect = pygame.rect.Rect(self.x + self.texto_rect.width / 2 - valor_srf.get_width() / 2, self.y + 200,
+                                      valor_srf.get_width(), valor_srf.get_height())
         self.ventana.blit(valor_srf, valor_rect)
 
-        pygame.draw.rect(self.ventana, (self.color), self.rectangulo_borde,3)
+        # Dibujado de la barra de nivel (rectangulos)
+        pygame.draw.rect(self.ventana, (self.color), self.rectangulo_borde, 3)
         self.rectangulo_relleno.height = int(valor) * 26
         self.rectangulo_relleno.y = self.rectangulo_borde.bottom - int(valor) * 26
         pygame.draw.rect(self.ventana, (self.color), self.rectangulo_relleno)
