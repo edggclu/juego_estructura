@@ -60,3 +60,5 @@ Registro interno de cuántos enemigos se han derrotado.
 Visualización de estadísticas en pantalla.
 Las estadísticas (skeleton_Blue, vampire_Base, etc.) se ordenan por kills en orden descendente.
 Implementado en ventana_juego.quicksort_stats().
+
+[Documentacion Automatica con Deepwiki](https://deepwiki.com/edggclu/juego_estructura)
