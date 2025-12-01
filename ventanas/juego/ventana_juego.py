@@ -67,7 +67,7 @@ class ventana_juego:
         #self.agregar_enemigo(20, 20, 'skeleton', 'Blue')
 
     def update(self):
-        # --- 1. PROCESAR EVENTOS ---
+        # EVENTOS DE PYGAME
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -201,6 +201,7 @@ class ventana_juego:
             rect = render.get_rect(center=(self.ventana.get_width() // 2, self.ventana.get_height() // 2 + i * 40))
             self.ventana.blit(render, rect)
 
+    # FUNCION DE QUE AGREGA ENEMIGOS
     def agregar_enemigo(self, x, y, tipo, color):
         stats = self.armas_stats[self.lista_colores.index(color)]
         self.entidades.append(enemigo(x, y, self.ventana, f'{tipo}_{color}', self.jugador, stats))

@@ -2,29 +2,27 @@ import random
 import pygame
 
 class boton_cargar_partida:
-    """
-    Representa un botón individual de partida guardada en la ventana de carga.
-    Contiene la información de la partida (estadísticas) y es interactivo.
-    """
+
+    # Representa un botón individual de partida guardada en la ventana de carga, contiene la información
+    # de la partida y es interactivo.
 
     def __init__(self, ventana, x, y, tiempo, imagen_personaje, nombre_jugador):
-        """
-        Inicializa un botón de partida con sus datos y elementos gráficos.
+        #Inicializa un botón de partida con sus datos y elementos gráficos.
 
-        :param ventana: La superficie principal de Pygame.
-        :param x: Posición X inicial del botón.
-        :param y: Posición Y inicial del botón.
-        :param tiempo: Tiempo de partida inicial (en minutos, usado para el `tiempo_partida`).
-        :param imagen_personaje: Ruta de la imagen base del personaje (ej. esqueleto o vampiro).
-        :param nombre_jugador: El nombre de la partida/jugador.
-        """
+        #Paramtros usados:
+        # ventana: La superficie principal de Pygame.
+        # x: Posición X inicial del botón.
+        # y: Posición Y inicial del botón.
+        # tiempo: Tiempo de partida inicial
+        # imagen_personaje: Ruta de la imagen base del personaje
+        # nombre_jugador: El nombre de la partida/jugador.
 
         pygame.font.init()                                 # Inicializa el módulo de fuente
-        self.font = pygame.font.Font(None, 24)             # Usa la fuente por defecto, tamaño 24
+        self.font = pygame.font.Font(None, 24)   # Usa la fuente por defecto, tamaño 24
         self.ventana = ventana
         self.hovered = False                               # Estado de hover del mouse
 
-        # --- GENERACIÓN DE ESTADÍSTICAS ALEATORIAS ---
+        # GENERACIÓN DE ESTADÍSTICAS ALEATORIAS
         # Conteo de Esqueletos (Aleatorio entre 0 y 100)
         self.kills_esqueleto_base = (random.randint(0, 100))
         self.kills_esqueleto_azul = (random.randint(0, 100))
@@ -38,7 +36,7 @@ class boton_cargar_partida:
         self.kills_vampiro_rojo = (random.randint(0, 100))
 
 
-        # --- DATOS DE TEXTO PARA MOSTRAR ---
+        # DATOS DE TEXTO PARA MOSTRAR
         self.nombre_jugador = str(nombre_jugador)
 
         # Cálculo de kills totales, convertido a string para su visualización
@@ -51,7 +49,7 @@ class boton_cargar_partida:
 
         self.ruta_imagen_personaje = imagen_personaje # Ruta usada para mostrar en el botón y en PanelInfoBase
 
-        # --- CARGA Y ESCALADO DE IMÁGENES DE COMPONENTES ---
+        # CARGA Y ESCALADO DE IMÁGENES DE COMPONENTES
         self.imagen_boton = pygame.image.load("assets/Menu/Boton.png")
         self.imagen_personaje = pygame.image.load(imagen_personaje)
         self.imagen_espada = pygame.image.load("assets/Menu/espada_default.png")
@@ -66,7 +64,7 @@ class boton_cargar_partida:
         self.imagen_bolsaDinero = pygame.transform.scale(self.imagen_bolsaDinero, (25, 25))
 
 
-        # --- OBTENCIÓN DE RECTÁNGULOS DE POSICIÓN ---
+        # OBTENCIÓN DE RECTÁNGULOS DE POSICIÓN
         self.imagen_boton_rect = self.imagen_boton.get_rect()
         self.imagen_espada_rect = self.imagen_espada.get_rect()
         self.imagen_personaje_rect = self.imagen_personaje.get_rect()
@@ -76,7 +74,7 @@ class boton_cargar_partida:
         # POSICIÓN INICIAL DEL BOTÓN PRINCIPAL
         self.imagen_boton_rect.topleft = (x, y)
 
-        # POSICIONAMIENTO INICIAL RELATIVO A `imagen_boton_rect` (para los primeros cuadros)
+        # POSICIONAMIENTO INICIAL RELATIVO A imagen_boton_rect
         self.imagen_personaje_rect.left = self.imagen_boton_rect.left
         self.imagen_personaje_rect.centery = self.imagen_boton_rect.centery - 22
 
@@ -90,10 +88,10 @@ class boton_cargar_partida:
         self.imagen_bolsaDinero_rect.centery = self.imagen_boton_rect.centery + 10
 
     def update(self):
-        """
-        Actualiza la lógica del botón, principalmente para detectar si el mouse está encima (hover).
-        """
+        #Actualiza la lógica del botón, principalmente para detectar si el mouse está encima (hover).
+
         pos_mouse = pygame.mouse.get_pos()
+
         # Comprueba si el mouse está encima del botón principal
         if self.imagen_boton_rect.collidepoint(pos_mouse):
                 self.hovered = True
@@ -102,10 +100,10 @@ class boton_cargar_partida:
             self.hovered = False
 
     def draw(self):
-        """
-        Dibuja el botón, sus iconos y sus textos en la ventana.
-        """
-        # 1. Dibujar Fondo y Personaje
+
+        # Dibuja el botón, sus iconos y sus textos en la ventana.
+
+        # Dibujar Fondo y Personaje
         # La posición del personaje debe recalcularse para seguir al botón,
         # ya que el botón puede haberse movido por el ordenamiento.
         self.imagen_personaje_rect.left = self.imagen_boton_rect.left
@@ -114,7 +112,7 @@ class boton_cargar_partida:
         self.ventana.blit(self.imagen_boton, self.imagen_boton_rect)
         self.ventana.blit(self.imagen_personaje, self.imagen_personaje_rect)
 
-        # 2. Renderizar Textos (se hace aquí ya que el texto no es estático)
+        # Renderizar Textos ya que el texto no es estático
         self.texto_nombre = self.font.render(self.nombre_jugador, True, (255, 255, 255))
         self.texto_tiempo = self.font.render(self.tiempo_partida, True, (200, 200, 200))
         self.texto_espada = self.font.render(self.enemigos_eliminados, True, (200, 200, 200))
@@ -126,7 +124,7 @@ class boton_cargar_partida:
         self.texto_espada_rect = self.texto_espada.get_rect()
         self.texto_BolsaDinero_rect = self.texto_BolsaDinero.get_rect()
 
-        # 3. POSICIONAMIENTO Y DIBUJADO DE TEXTOS E ICONOS (Relativo al botón principal)
+        # POSICIONAMIENTO Y DIBUJADO DE TEXTOS E ICONOS
 
         # TEXTO NOMBRE
         self.texto_nombre_rect.left = self.imagen_personaje_rect.right - 30
@@ -160,45 +158,21 @@ class boton_cargar_partida:
         self.texto_BolsaDinero_rect.centery = self.imagen_boton_rect.centery + 10
         self.ventana.blit(self.texto_BolsaDinero, self.texto_BolsaDinero_rect)
 
-    # --- MÉTODOS PARA ORDENAMIENTO (Usados por GestorOrdenamiento) ---
-
+    # MÉTODOS PARA ORDENAMIENTO (Usados por GestorOrdenamiento)
     def obtener_tiempo_int(self):
-        """
-        Extrae y retorna el valor numérico del tiempo de partida como un entero.
-        Necesario para el algoritmo de ordenamiento.
-        """
-        try:
-            # Elimina la parte de texto (" minutos") y convierte el número a entero
-            return int(self.tiempo_partida.split(" ")[0])
-        except:
-            return 0
+        # Elimina la parte de texto " minutos" y convierte el número a entero
+        return int(self.tiempo_partida.split(" ")[0])
 
     def obtener_dinero_int(self):
-        """
-        Extrae y retorna el valor numérico del dinero acumulado como un entero.
-        Necesario para el algoritmo de ordenamiento.
-        """
-        try:
-            return int(self.dinero_acumulado)
-        except:
-            return 0
+        #Extrae y retorna el valor numérico del dinero acumulado como un entero.
+        return int(self.dinero_acumulado)
 
     def obtener_kills_int(self):
-        """
-        Extrae y retorna el valor numérico de las kills totales como un entero.
-        Necesario para el algoritmo de ordenamiento.
-        """
-        try:
-            return int(self.enemigos_eliminados)
-        except:
-            return 0
+        #Extrae y retorna el valor numérico de las kills totales como un entero
+        return int(self.enemigos_eliminados)
 
     def mover_a_y(self, nueva_y):
-        """
-        Reposiciona el botón verticalmente. Usado después de un ordenamiento.
-
-        :param nueva_y: La nueva coordenada Y (top) para el botón.
-        """
-        # Solo se necesita mover el rect principal, los demás elementos se dibujan
-        # de forma relativa a este en el método `draw()`.
+        # Reposiciona el botón verticalmente, usado después de un ordenamiento
+        # Parametro usado:
+        # nueva_y: La nueva coordenada Y top para el botón.
         self.imagen_boton_rect.top = nueva_y
