@@ -61,4 +61,21 @@ Visualización de estadísticas en pantalla.
 Las estadísticas (skeleton_Blue, vampire_Base, etc.) se ordenan por kills en orden descendente.
 Implementado en ventana_juego.quicksort_stats().
 
+
+## Creditos
+- Leopoldo:
+  - Diseño de personajes
+  - Documentacion
+  - Diseño de assets del menu
+- Josue:
+  - Diseño del mapa
+  - Implementacion del mapa dentro del juego
+- Edgar:
+  - Diseño de la logica de animacion
+  - Diseño del hilo principal
+  - Implementacion de la logica de los personajes 
+- Fermin:
+  - Implementacion de funcionalidad de los botones de las ventanas.
+  - Implementacion del algoritmo insertion sort para ordenar las partidas guardadas
+
 [Documentacion Automatica con Deepwiki](https://deepwiki.com/edggclu/juego_estructura)
