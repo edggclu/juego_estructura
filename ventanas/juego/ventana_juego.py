@@ -11,7 +11,7 @@ class ventana_juego:
         self.ventana = ventana
         self.partida = partida
 
-        # --- ESTADOS Y MENÚ ---
+        # ESTADOS Y MENÚ
         self.estado = 'jugando'
         self.fuente = pygame.font.SysFont('minecraft', 30)
         self.fuente_stats = pygame.font.SysFont('minecraft', 20)
@@ -23,7 +23,7 @@ class ventana_juego:
         self.mapa_juego = Map("assets/mapa/mapa2.tmx")
         self.fondo_mapa = self.mapa_juego.crear_mapa()
 
-        # --- LÓGICA EN INGLÉS ---
+        # LÓGICA EN INGLÉS
         self.lista_colores = ['Base', 'Blue', 'Green', 'Red']
         self.lista_tipo_enemigos = ['skeleton', 'vampire']
 
@@ -96,13 +96,13 @@ class ventana_juego:
             if event.type == pygame.KEYUP:
                 self.jugador.key_up(event)
 
-        # --- 2. DIBUJADO BASE ---
+        # DIBUJADO DE LA VENTANA
         self.ventana.fill((0, 0, 0))
         x = self.jugador.relative_x
         y = self.jugador.relative_y
         self.ventana.blit(self.fondo_mapa, (x, y))
 
-        # --- 3. LÓGICA SEGÚN ESTADO ---
+        # LÓGICA SEGÚN ESTADO
         if self.estado == 'jugando':
             tiempo_actual = pygame.time.get_ticks()
             if len(self.entidades) < 11:
@@ -135,33 +135,25 @@ class ventana_juego:
             self.dibujar_stats()
             self.mostrar_menu_pausa()
 
-    # --- IMPLEMENTACIÓN DE QUICKSORT ---
+    # IMPLEMENTACIÓN DE QUICKSORT
     def quicksort_stats(self, lista):
-        """
-        Ordena una lista de tuplas [('nombre', cantidad), ...] usando Quicksort.
-        Orden: Descendente (Mayor cantidad primero).
-        """
-        # Caso base: Si la lista tiene 0 o 1 elemento, ya está ordenada
+        # Caso base
         if len(lista) <= 1:
             return lista
 
-        # Elegimos el pivote (tomamos el elemento del medio)
+        # Eleccion del pivote
         pivot = lista[len(lista) // 2]
         valor_pivot = pivot[1]  # Cantidad de kills
 
         # Partición de la lista
-        # Izquierda: Elementos MAYORES que el pivote (para orden descendente)
         izquierda = [x for x in lista if x[1] > valor_pivot]
-
-        # Medio: Elementos IGUALES al pivote
         medio = [x for x in lista if x[1] == valor_pivot]
-
-        # Derecha: Elementos MENORES que el pivote
         derecha = [x for x in lista if x[1] < valor_pivot]
 
-        # Llamada recursiva y concatenación
+        # Llamada recursiva
         return self.quicksort_stats(izquierda) + medio + self.quicksort_stats(derecha)
 
+    # Dibuja los stats
     def dibujar_stats(self):
         titulo = self.fuente_stats.render("Enemigos Matados (Quicksort):", True, (255, 255, 0))
         rect_titulo = titulo.get_rect(topright=(self.ventana.get_width() - 10, 10))
@@ -172,7 +164,7 @@ class ventana_juego:
         # Convertimos el diccionario a lista de tuplas para poder ordenarlo
         lista_items = list(self.stats.items())
 
-        # --- LLAMADA AL ALGORITMO QUICKSORT ---
+        # LLAMADA AL ALGORITMO QUICKSORT
         lista_ordenada = self.quicksort_stats(lista_items)
 
         # Iteramos sobre la lista YA ORDENADA
